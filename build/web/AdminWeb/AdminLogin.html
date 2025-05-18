@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="Style/AdminStyle.css">
+        <style>
+            body{
+                background-image: url('Image/BackgroundAdminLogin.jpg');
+                background-size: cover;
+                background-repeat: no-repeat;
+                height: 100%;
+                width: 100%;
+                positive: relative;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="LAdmin">
+            <h1>Admin Login</h1>
+            <form action='AdminLoginServlet' method='post'>
+                <p>
+                    Username:<input type='text' name='username' required=''/> <br>
+                    Password:<input type='password' name='password' required=''/> <br>
+                    <input type='submit' value='Login'/> <br>
+                </p>
+                <p>Forgot Password? <a href='AdminForgotServlet'>Click Here</a></p>
+            </form>
+        </div>
+    </body>
+</html>
