@@ -13,18 +13,17 @@ import java.sql.SQLException;
  *
  * @author ChanRoi
  */
-public class DBUtils implements Serializable{
-    public static Connection getConnection(){
-        try{
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=library_system;instanceName=DBI";
-            Connection con = DriverManager.getConnection(url, "sa", "12345");
-            return con;
-        }catch(ClassNotFoundException ex){
-            ex.printStackTrace();
-        }catch(SQLException ex){
-            ex.printStackTrace();
-        }
-        return null;
+public class DBUtils {
+//    Do not change this code
+    private static final String DB_NAME = "library_system";
+    private static final String DB_USER_NAME = "SA";
+    private static final String DB_PASSWORD = "12345";
+
+    public static Connection getConnection() throws ClassNotFoundException, SQLException {
+        Connection conn = null;
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        String url = "jdbc:sqlserver://localhost:1433;databaseName=" + DB_NAME;
+        conn = DriverManager.getConnection(url, DB_USER_NAME, DB_PASSWORD);
+        return conn;
     }
 }

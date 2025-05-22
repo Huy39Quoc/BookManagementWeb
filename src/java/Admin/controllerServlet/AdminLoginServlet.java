@@ -5,6 +5,8 @@
 
 package Admin.controllerServlet;
 
+import Core.Entities.Account;
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -68,8 +70,15 @@ public class AdminLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String username = request.getParameter("username");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
+        UserDAO check = new UserDAO();
+        Account user = check.accessUser(email, password);
+        if(user != null){
+            
+        }else{
+            //Later
+        }
         
     }
 
