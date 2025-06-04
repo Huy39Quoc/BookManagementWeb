@@ -2,12 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/ChanRoi/Documents/NetBeansProjects/PRJWorkshop/src/java/JDBC/DBUtils.java</file>
-            <file>file:/C:/Users/ChanRoi/Documents/NetBeansProjects/PRJWorkshop/src/java/dao/BookDAO.java</file>
-            <file>file:/C:/Users/ChanRoi/Documents/NetBeansProjects/PRJWorkshop/src/java/dao/UserDAO.java</file>
-            <file>file:/C:/Users/ChanRoi/Documents/NetBeansProjects/PRJWorkshop/src/java/Admin/controllerServlet/AdminLoginServlet.java</file>
-            <file>file:/C:/Users/ChanRoi/Documents/NetBeansProjects/PRJWorkshop/web/AdminWeb/AdminLogin.html</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
