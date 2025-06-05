@@ -17,7 +17,7 @@
         <link rel="stylesheet" type="text/css" href="Style/AdminStyle.css">
     </head>
     <body>
-        <script src="Javascript/script.js"></script>
+        <script src="Javascript/Script.js"></script>
         <div class="UserList">
             <table class="Table_UserList">
                 <tr>
@@ -39,7 +39,7 @@
                     <td><%= user.getEmail()%></td>
                     <td><%= user.getRole()%></td>
                     <td><%= user.getStatus()%></td>
-                    <td><button onclick="BanUser('<%= user.getId() %>', '<%= user.getStatus() %>', this)"><%= user.getStatus().equals("active") ? "Ban" : "Unban" %></button></td>
+                    <td><button onclick="BanUser(this)"><%= user.getStatus().equals("active") ? "Ban" : "Unban" %></button></td>
                 </tr>
                 <%
                     }

@@ -124,4 +124,39 @@ public class UserDAO implements IUser {
        }
         return null;
     }
+    
+    public void UpdateStatus(int id){
+      Connection cn = null;
+      try{
+          cn = DBUtils.getConnection();
+          if(cn != null){
+              String getStatus = "SELECT status FROM users WHERE id = ? ";
+              PreparedStatement st = cn.prepareStatement(getStatus);
+              ResultSet rs = st.executeQuery();
+              if(rs != null){
+                  String status = rs.getString("status");
+                  if(status.equals("active")){
+                      status = "blocked";
+                  }else if(status.equals("blocked")){
+                      status = "active";
+                  }
+                  String updateStatus = "UPDATE users SET status = ? WHERE id = ?";
+                  st = cn.prepareStatement(updateStatus);
+                  st.setString(1, status);
+                  st.setInt(2, id);
+                  st.executeUpdate();
+              }
+          }
+      }catch(Exception e){
+          e.printStackTrace();
+      }finally{
+          try{
+              if(cn != null){
+                  cn.close();
+              }
+          }catch(Exception e){
+              e.printStackTrace();
+          }
+      }
+ }
 }

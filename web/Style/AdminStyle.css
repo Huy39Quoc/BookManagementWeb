@@ -39,3 +39,29 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     padding: 10px;
     width: 100vw;
 }
+
+.Menu{
+    background-color: black;
+    display:flex;
+    justify-content: space-around;
+    height: 60px;
+    align-items: center;
+}
+
+.Menu a {
+    color: white;
+    cursor: pointer;
+    margin: 0;
+    height: 60px;
+    padding: 0 20px;  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+
+.Menu p:hover{
+    background-color: white;
+    color: black;
+}

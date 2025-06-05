@@ -13,4 +13,5 @@ import java.util.ArrayList;
  */
 public interface IUser {
     ArrayList<Account> getUserList();
+    void UpdateStatus(int id);
 }

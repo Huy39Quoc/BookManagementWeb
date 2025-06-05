@@ -3,8 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
- function BanUser(userId, status, button) {
-  console.log("User ID:", userId);
-  console.log("Status:", status);
-  button.innerText = status === "active" ? "Unban" : "Ban";
-}
+    function BanUser(button) {
+      if(button.innerText === "Ban"){
+          button.innerText = "Unban";
+      }else{
+          button.innerText = "Ban";
+      }
+   }
