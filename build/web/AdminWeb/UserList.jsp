@@ -39,7 +39,7 @@
                     <td><%= user.getEmail()%></td>
                     <td><%= user.getRole()%></td>
                     <td><%= user.getStatus()%></td>
-                    <td><button onclick="BanUser(this)"><%= user.getStatus().equals("active") ? "Ban" : "Unban" %></button></td>
+                    <td><button onclick="BanUser('<%= user.getName()%>', this)"><%= user.getStatus().equals("active") ? "Ban" : "Unban" %></button></td>
                 </tr>
                 <%
                     }

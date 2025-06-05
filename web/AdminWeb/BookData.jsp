@@ -1,6 +1,6 @@
 <%-- 
-    Document   : MainAdminPage
-    Created on : Jun 5, 2025, 12:27:11 AM
+    Document   : BookData
+    Created on : Jun 5, 2025, 8:36:30 PM
     Author     : ChanRoi
 --%>
 
@@ -9,12 +9,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin Dashboard</title>
-        <link rel="stylesheet" type="text/css" href="Style/AdminStyle.css">
+        <title>Book Data</title>
+    <link rel="stylesheet" type="text/css" href="Style/AdminStyle.css">
     </head>
     <body>
         <div class="header">
-            <h1>Book Management Page</h1>
+            <h1>Transaction</h1>
             <p><a href="AdminDashboard?file=Logout">Logout</a></p>
         </div>
         
@@ -29,8 +29,5 @@
        </div>
             
             
-            <div class="Welcome">
-                <h1>Welcome, </h1>
-            </div>
     </body>
 </html>

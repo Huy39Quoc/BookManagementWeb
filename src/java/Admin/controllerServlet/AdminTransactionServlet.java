@@ -1,4 +1,4 @@
- /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
@@ -17,8 +17,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author ChanRoi
  */
-@WebServlet(name="AdminDashboard", urlPatterns={"/AdminDashboard"})
-public class AdminDashboard extends HttpServlet {
+@WebServlet(name="AdminTransactionServlet", urlPatterns={"/AdminTransactionServlet"})
+public class AdminTransactionServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -29,44 +29,17 @@ public class AdminDashboard extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String url = "AdminWeb/MainAdminPage.jsp";
+        String url = "AdminWeb/BookData.jsp";;
         try{
-            String changeFile = request.getParameter("file");
-            if(changeFile == null){
-                changeFile = "MainPage";
-            }
-            switch(changeFile){
-                case "MainPage":
-                    url = "AdminWeb/MainAdminPage.jsp";
-                    break;
-                    
-                case "Manage":
-                    break;
-                    
-                case "Transaction":
-                    url = "AdminTransactionServlet";
-                    break;
-                    
-                case "Access":
-                    url = "AdminWeb/UserList.jsp";
-                    break;
-                    
-                case "Overdue":
-                    break;
-                    
-                case "Inventory":
-                    break;
-                    
-                case "Statistic":
-                    break;
-                    
-                case "System":
-                    url = "AdminWeb/System_config.jsp";
-                    break;
-                    
-                case "Logout":
-                    break;
-            }
+             String function = request.getParameter("function");
+             if(function == null){
+                 function = "MainTransaction";
+             }
+             switch(function){
+                 case "MainTransaction":
+                     url = "AdminWeb/BookData.jsp";
+                     break;
+             }
         }catch(Exception e){
             e.printStackTrace();
         }finally{

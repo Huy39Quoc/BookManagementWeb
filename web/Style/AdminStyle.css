@@ -17,6 +17,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: #000;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }*/
+.header{
+    display: flex;
+    justify-content: center;
+}
+
+.header a{
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.header p{
+    margin: 0;
+    position: absolute;
+    right: 0;
+    padding-right: 20px;
+    margin-top: 20px;
+}
+
 .Config{
     display: flex;
     justify-content: center;
@@ -61,7 +80,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 
-.Menu p:hover{
+.Menu a:hover{
     background-color: white;
     color: black;
+}
+
+.Welcome{
+     display: flex;
+     justify-content: center;
+     margin-top: 300px;
 }
