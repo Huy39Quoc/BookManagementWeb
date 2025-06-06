@@ -5,6 +5,9 @@
 
 package Admin.controllerServlet;
 
+import Core.Entities.Book;
+import Core.Interfaces.IBook;
+import dao.BookDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,13 +15,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
  * @author ChanRoi
  */
-@WebServlet(name="AdminTransactionServlet", urlPatterns={"/AdminTransactionServlet"})
-public class AdminTransactionServlet extends HttpServlet {
+@WebServlet(name="AdminSearchBook", urlPatterns={"/AdminSearchBook"})
+public class AdminSearchBook extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -27,39 +33,37 @@ public class AdminTransactionServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        String url = "AdminWeb/BookData.jsp";
+  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    try {
+         IBook book = new BookDAO();
+         ArrayList<Book> getList = book.getBookList();
+         String get = (String) request.getAttribute("SearchBook");
+         String input = (get == null) ? "" : get.toLowerCase();
+
+         List<Book> searchBook = getList.stream()
+                 .filter(i -> i.getTitle().toLowerCase().contains(input)).collect(Collectors.toList());
+
+         request.setAttribute("BookList", new ArrayList<>(searchBook));
+
+        if (!searchBook.isEmpty()) {
+            request.setAttribute("SearchTitle", "Here is the book list.");
+        }else{
+            request.setAttribute("SearchTitle", "Book is not existed.");
+         }
+    }catch(Exception e){
+        e.printStackTrace();
+    }finally{
         try{
-             String function = request.getParameter("function");
-             if(function == null){
-                 function = "MainTransaction";
-             }
-             switch(function){
-                 case "MainTransaction":
-                     url = "AdminWeb/BookData.jsp";
-                     break;
-                     
-                case "Search":
-                String getInput = request.getParameter("SearchBook");
-                if (getInput == null || getInput.trim().isEmpty()) {
-                    url = "AdminWeb/BookData.jsp";
-                } else {
-                    request.setAttribute("SearchBook", getInput.trim());
-                    url = "AdminSearchBook";
-                    }
-                break;
-             }
+            request.getRequestDispatcher("AdminWeb/BookData.jsp").forward(request, response);
         }catch(Exception e){
             e.printStackTrace();
-        }finally{
-            try{
-                request.getRequestDispatcher(url).forward(request, response);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
         }
-    } 
+    }
+}
+
+
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

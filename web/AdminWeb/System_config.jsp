@@ -41,6 +41,7 @@
                 <%
                 IConfig configDAO = new ConfigDAO();
                 ArrayList<Config> getConfig = configDAO.configList();
+                if(getConfig != null && !getConfig.isEmpty()){
                 for(Config data: getConfig){
                 %>
                 <tr>
@@ -49,7 +50,8 @@
                     <td><%=data.getDescription()%></td>
                 </tr>
                 <%
-                    }
+                      }
+                   }
                 %>
             </table>
         </div>

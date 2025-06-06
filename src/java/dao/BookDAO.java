@@ -6,6 +6,7 @@ package dao;
 
 import Core.Entities.Book;
 import Core.Entities.BorrowRecord;
+import Core.Interfaces.IBook;
 import JDBC.DBUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
  *
  * @author ChanRoi
  */
-public class BookDAO {
+public class BookDAO implements IBook {
     public ArrayList<Book> booksList = new ArrayList();
     public ArrayList<BorrowRecord> Borrow = new ArrayList();
     public BookDAO(){
@@ -28,6 +29,7 @@ public class BookDAO {
         try{
             cn = DBUtils.getConnection();
             if(cn != null){
+                booksList.clear();
                 String sql = "SELECT id, title, author, isbn, category, published_year, total_copies, available_copies, status "
                         + "FROM books";
                 PreparedStatement st = cn.prepareCall(sql);
@@ -35,10 +37,10 @@ public class BookDAO {
                 if(rs != null){
                     while(rs.next()){
                       int id = rs.getInt("id");
-                      String title = rs.getNString("title");
-                      String author = rs.getNString("author");
-                      String isbn = rs.getNString("isbn");
-                      String category = rs.getNString("category");
+                      String title = rs.getString("title");
+                      String author = rs.getString("author");
+                      String isbn = rs.getString("isbn");
+                      String category = rs.getString("category");
                       int PublishedYear = rs.getInt("published_year");
                       int TotalCopies = rs.getInt("total_copies");
                       int AvailableCopies = rs.getInt("available_copies");
@@ -52,6 +54,7 @@ public class BookDAO {
                 st = cn.prepareCall(sqlBorrow);
                 rs = st.executeQuery();
                 if(rs != null){
+                    Borrow.clear();
                     while(rs.next()){
                       int id = rs.getInt("id");
                       int user_id = rs.getInt("user_id");
@@ -75,6 +78,10 @@ public class BookDAO {
                     e.printStackTrace();
             }
         }
+    }
+    
+    public ArrayList<Book> getBookList(){
+        return booksList;
     }
     
     public int AddBook(Book book){

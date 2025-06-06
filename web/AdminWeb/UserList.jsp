@@ -17,6 +17,20 @@
         <link rel="stylesheet" type="text/css" href="Style/AdminStyle.css">
     </head>
     <body>
+        <div class="header">
+            <h1>User List</h1>
+            <p><a href="AdminDashboard?file=Logout">Logout</a></p>
+        </div>
+        
+       <div class="Menu">
+            <a href="AdminDashboard?file=Manage">Manage Book</a>
+            <a href="AdminDashboard?file=Transaction">Transaction</a>
+            <a href="AdminDashboard?file=Access">User Access</a>
+            <a href="AdminDashboard?file=Overdue">Overdue Book</a>
+            <a href="AdminDashboard?file=Inventory">Inventory</a>
+            <a href="AdminDashboard?file=Statistic">Statistic</a>
+            <a href="AdminDashboard?file=System">System Configuration</a>
+       </div>
         <script src="Javascript/Script.js"></script>
         <div class="UserList">
             <table class="Table_UserList">
@@ -31,7 +45,8 @@
                 <%
                 IUser getUser = new UserDAO();
                 ArrayList<Account> getUserList = getUser.getUserList();
-                for(Account user: getUserList){
+                if(getUserList != null && !getUserList.isEmpty()){
+                   for(Account user: getUserList){
                 %>
                 <tr>
                     <td><%= user.getId()%></td>
@@ -42,7 +57,8 @@
                     <td><button onclick="BanUser('<%= user.getName()%>', this)"><%= user.getStatus().equals("active") ? "Ban" : "Unban" %></button></td>
                 </tr>
                 <%
-                    }
+                      }
+                   }
                 %>
             </table>
         </div>
