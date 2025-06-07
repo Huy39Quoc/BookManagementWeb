@@ -1,10 +1,14 @@
- /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
 package Admin.controllerServlet;
 
+import Core.Interfaces.IBook;
+import Core.Interfaces.IUser;
+import dao.BookDAO;
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,8 +21,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author ChanRoi
  */
-@WebServlet(name="AdminDashboard", urlPatterns={"/AdminDashboard"})
-public class AdminDashboard extends HttpServlet {
+@WebServlet(name="AdminBanServlet", urlPatterns={"/AdminBanServlet"})
+public class AdminBanServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -29,53 +33,13 @@ public class AdminDashboard extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String url = "AdminWeb/MainAdminPage.jsp";
         try{
-            String changeFile = request.getParameter("file");
-            if(changeFile == null){
-                changeFile = "MainPage";
-            }
-            switch(changeFile){
-                case "MainPage":
-                    url = "AdminWeb/MainAdminPage.jsp";
-                    break;
-                    
-                case "Manage":
-                    break;
-                    
-                case "Transaction":
-                    url = "AdminTransactionServlet";
-                    break;
-                    
-                case "Access":
-                    url = "AdminWeb/UserList.jsp";
-                    break;
-                    
-                case "Overdue":
-                    break;
-                    
-                case "Inventory":
-                    break;
-                    
-                case "Statistic":
-                    url = "AdminWeb/AdminStatistic.jsp";
-                    break;
-                    
-                case "System":
-                    url = "AdminWeb/System_config.jsp";
-                    break;
-                    
-                case "Logout":
-                    break;
-            }
+            int id = Integer.parseInt(request.getParameter("userId"));
+            IUser user = new UserDAO();
+            int check = user.EditUserStatus(id);
+            request.getRequestDispatcher("AdminWeb/UserList.jsp").forward(request, response);
         }catch(Exception e){
             e.printStackTrace();
-        }finally{
-            try{
-                request.getRequestDispatcher(url).forward(request, response);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
         }
     } 
 

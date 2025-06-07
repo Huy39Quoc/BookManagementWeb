@@ -52,6 +52,35 @@ public class UserDAO implements IUser {
         return UserList;
     }
     
+     public Account CheckExistUser(int id){
+        Account check = null;
+        Connection cn = null;
+        try{
+            cn = DBUtils.getConnection();
+            if(cn != null){
+                String sql = "SELECT * FROM users WHERE id = ?";
+                PreparedStatement ps = cn.prepareStatement(sql);
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                if(rs != null && rs.next()){
+                    check = new Account(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password")
+                            , rs.getString("role"), rs.getString("status"));
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try{
+                if(cn != null){
+                    cn.close();
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        return check;
+    }
+    
     public Account accessUser(String email, String password){
         Account user = null;
         Connection cn = null;
@@ -125,38 +154,32 @@ public class UserDAO implements IUser {
         return null;
     }
     
-    public void UpdateStatus(int id){
-      Connection cn = null;
-      try{
-          cn = DBUtils.getConnection();
-          if(cn != null){
-              String getStatus = "SELECT status FROM users WHERE id = ? ";
-              PreparedStatement st = cn.prepareStatement(getStatus);
-              ResultSet rs = st.executeQuery();
-              if(rs != null){
-                  String status = rs.getString("status");
-                  if(status.equals("active")){
-                      status = "blocked";
-                  }else if(status.equals("blocked")){
-                      status = "active";
-                  }
-                  String updateStatus = "UPDATE users SET status = ? WHERE id = ?";
-                  st = cn.prepareStatement(updateStatus);
-                  st.setString(1, status);
-                  st.setInt(2, id);
-                  st.executeUpdate();
+    public int EditUserStatus(int id){
+       int check = 0;
+       Account user = CheckExistUser(id);
+       if(user != null) {
+           Connection cn = null;
+           try {
+             cn = DBUtils.getConnection();
+             if (cn != null) {
+                String newStatus = user.getStatus().equalsIgnoreCase("active") ? "blocked" : "active";
+                String sql = "UPDATE users SET status = ? WHERE id = ?";
+                PreparedStatement ps = cn.prepareStatement(sql);
+                ps.setString(1, newStatus);
+                ps.setInt(2, id);
+                check = ps.executeUpdate();
               }
-          }
-      }catch(Exception e){
-          e.printStackTrace();
-      }finally{
-          try{
-              if(cn != null){
-                  cn.close();
-              }
-          }catch(Exception e){
-              e.printStackTrace();
-          }
-      }
- }
+             }catch (Exception e){
+                 e.printStackTrace();
+              }finally{
+                  try{
+                     if (cn != null) cn.close();
+                  }catch (Exception e){
+                     e.printStackTrace();
+            }
+        }
+    }
+
+    return check;
+  }
 }

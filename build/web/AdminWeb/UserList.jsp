@@ -22,7 +22,7 @@
             <p><a href="AdminDashboard?file=Logout">Logout</a></p>
         </div>
         
-       <div class="Menu">
+        <div class="Menu">
             <a href="AdminDashboard?file=Manage">Manage Book</a>
             <a href="AdminDashboard?file=Transaction">Transaction</a>
             <a href="AdminDashboard?file=Access">User Access</a>
@@ -30,8 +30,10 @@
             <a href="AdminDashboard?file=Inventory">Inventory</a>
             <a href="AdminDashboard?file=Statistic">Statistic</a>
             <a href="AdminDashboard?file=System">System Configuration</a>
-       </div>
+        </div>
+        
         <script src="Javascript/Script.js"></script>
+        
         <div class="UserList">
             <table class="Table_UserList">
                 <tr>
@@ -43,22 +45,28 @@
                     <th>Action Button</th>
                 </tr>
                 <%
-                IUser getUser = new UserDAO();
-                ArrayList<Account> getUserList = getUser.getUserList();
-                if(getUserList != null && !getUserList.isEmpty()){
-                   for(Account user: getUserList){
+                    IUser getUser = new UserDAO();
+                    ArrayList<Account> getUserList = getUser.getUserList();
+                    if (getUserList != null && !getUserList.isEmpty()) {
+                        for (Account user : getUserList) {
                 %>
                 <tr>
-                    <td><%= user.getId()%></td>
-                    <td><%= user.getName()%></td>
-                    <td><%= user.getEmail()%></td>
-                    <td><%= user.getRole()%></td>
-                    <td><%= user.getStatus()%></td>
-                    <td><button onclick="BanUser('<%= user.getName()%>', this)"><%= user.getStatus().equals("active") ? "Ban" : "Unban" %></button></td>
+                    <td><%= user.getId() %></td>
+                    <td><%= user.getName() %></td>
+                    <td><%= user.getEmail() %></td>
+                    <td><%= user.getRole() %></td>
+                    <td id="status"><%= user.getStatus() %></td>
+                    <td>
+                        <form action="AdminTransactionServlet" method="post">
+                            <input type="hidden" name="function" value="<%= user.getStatus().equals("active") ? "Ban" : "Unban" %>" />
+                            <input type="hidden" name="userId" value=<%= user.getId() %> />
+                            <input type="submit" value="<%= user.getStatus().equals("active") ? "Ban" : "Unban" %>"/>
+                        </form>
+                    </td>
                 </tr>
                 <%
-                      }
-                   }
+                        }
+                    }
                 %>
             </table>
         </div>

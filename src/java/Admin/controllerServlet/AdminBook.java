@@ -1,10 +1,13 @@
- /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
 package Admin.controllerServlet;
 
+import Core.Entities.Book;
+import Core.Interfaces.IBook;
+import dao.BookDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,8 +20,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author ChanRoi
  */
-@WebServlet(name="AdminDashboard", urlPatterns={"/AdminDashboard"})
-public class AdminDashboard extends HttpServlet {
+@WebServlet(name="AdminBook", urlPatterns={"/AdminBook"})
+public class AdminBook extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -29,43 +32,37 @@ public class AdminDashboard extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String url = "AdminWeb/MainAdminPage.jsp";
+        String url = "AdminWeb/BookData.jsp";
+        String title, author, isbn, category, status;
+        int id, publishedYear, totalCopies, availableCopies;
+        IBook book = new BookDAO();
+        int get;
         try{
-            String changeFile = request.getParameter("file");
-            if(changeFile == null){
-                changeFile = "MainPage";
-            }
-            switch(changeFile){
-                case "MainPage":
-                    url = "AdminWeb/MainAdminPage.jsp";
+            String action = request.getParameter("Action");
+            switch(action){
+                case "Add":
+                    title = request.getParameter("title");
+                    author = request.getParameter("author");
+                    isbn = request.getParameter("isbn");
+                    category = request.getParameter("category");
+                    publishedYear = Integer.parseInt(request.getParameter("publishedYear"));
+                    totalCopies = Integer.parseInt(request.getParameter("totalCopies"));
+                    availableCopies = Integer.parseInt(request.getParameter("availableCopies"));
+                    status = request.getParameter("status");
+                    get = book.AddBook(new Book(0, title, author, isbn, category, publishedYear, totalCopies, availableCopies, status));         
                     break;
                     
-                case "Manage":
-                    break;
-                    
-                case "Transaction":
-                    url = "AdminTransactionServlet";
-                    break;
-                    
-                case "Access":
-                    url = "AdminWeb/UserList.jsp";
-                    break;
-                    
-                case "Overdue":
-                    break;
-                    
-                case "Inventory":
-                    break;
-                    
-                case "Statistic":
-                    url = "AdminWeb/AdminStatistic.jsp";
-                    break;
-                    
-                case "System":
-                    url = "AdminWeb/System_config.jsp";
-                    break;
-                    
-                case "Logout":
+                case "Edit":
+                    id = Integer.parseInt(request.getParameter("id"));
+                    title = request.getParameter("title");
+                    author = request.getParameter("author");
+                    isbn = request.getParameter("isbn");
+                    category = request.getParameter("category");
+                    publishedYear = Integer.parseInt(request.getParameter("publishedYear"));
+                    totalCopies = Integer.parseInt(request.getParameter("totalCopies"));
+                    availableCopies = Integer.parseInt(request.getParameter("availableCopies"));
+                    status = request.getParameter("status");
+                    get = book.EditBook(new Book(id, title, author, isbn, category, publishedYear, totalCopies, availableCopies, status));
                     break;
             }
         }catch(Exception e){

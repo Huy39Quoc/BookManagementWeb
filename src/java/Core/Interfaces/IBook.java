@@ -13,4 +13,7 @@ import java.util.ArrayList;
  */
 public interface IBook {
     ArrayList<Book> getBookList();
+    int AddBook(Book book);
+    int EditBook(Book book);
+    Book CheckExistBook(int id);
 }

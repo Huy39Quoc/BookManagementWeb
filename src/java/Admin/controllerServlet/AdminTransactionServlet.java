@@ -5,6 +5,9 @@
 
 package Admin.controllerServlet;
 
+import Core.Entities.Book;
+import Core.Interfaces.IBook;
+import dao.BookDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -49,6 +52,23 @@ public class AdminTransactionServlet extends HttpServlet {
                     url = "AdminSearchBook";
                     }
                 break;
+                
+                case "Add":
+                    request.setAttribute("Action", "Add");
+                    url = "AdminBook";
+                    break;
+                
+                case "Edit":
+                    url = "AdminWeb/AdminBookEdit.jsp";
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    IBook book = new BookDAO();
+                    Book getBook = book.CheckExistBook(id);
+                    request.setAttribute("BookData", getBook);
+                    break;
+                    
+                case "Ban": case "Unban":
+                    url = "AdminBanServlet";
+                    break;
              }
         }catch(Exception e){
             e.printStackTrace();

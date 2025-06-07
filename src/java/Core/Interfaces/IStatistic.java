@@ -4,14 +4,12 @@
  */
 package Core.Interfaces;
 
-import Core.Entities.Account;
-import java.util.ArrayList;
+import Core.Entities.Statistic;
 
 /**
  *
  * @author ChanRoi
  */
-public interface IUser {
-    ArrayList<Account> getUserList();
-    int EditUserStatus(int id);
+public interface IStatistic {
+    Statistic getStatistic();
 }

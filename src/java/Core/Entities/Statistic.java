@@ -14,14 +14,14 @@ public class Statistic {
     private int Book;
     private int Users;
     private int BorrowedBook;
-    private ArrayList<Book> MostBorrowed;
+    private ArrayList<Most5> MostBorrowed;
     private ArrayList<MonthBorrow> BorrowingStat;
     private double Duration;
     
     public Statistic(){   
    }
     
-    public Statistic(int Book, int Users, int BorrowedBook, ArrayList<Book> MostBorrowed, ArrayList<MonthBorrow> BorrowingStat, double Duration){
+    public Statistic(int Book, int Users, int BorrowedBook, ArrayList<Most5> MostBorrowed, ArrayList<MonthBorrow> BorrowingStat, double Duration){
         this.Book = Book;
         this.Users = Users;
         this.BorrowedBook = BorrowedBook;
@@ -54,11 +54,11 @@ public class Statistic {
         this.BorrowedBook = BorrowedBook;
     }
 
-    public ArrayList<Book> getMostBorrowed() {
+    public ArrayList<Most5> getMostBorrowed() {
         return MostBorrowed;
     }
 
-    public void setMostBorrowed(ArrayList<Book> MostBorrowed) {
+    public void setMostBorrowed(ArrayList<Most5> MostBorrowed) {
         this.MostBorrowed = MostBorrowed;
     }
 

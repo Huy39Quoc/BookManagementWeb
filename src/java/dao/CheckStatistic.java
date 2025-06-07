@@ -6,7 +6,9 @@ package dao;
 
 import Core.Entities.Book;
 import Core.Entities.MonthBorrow;
+import Core.Entities.Most5;
 import Core.Entities.Statistic;
+import Core.Interfaces.IStatistic;
 import JDBC.DBUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
  *
  * @author ChanRoi
  */
-public class CheckStatistic {
+public class CheckStatistic implements IStatistic{
     public Statistic getStatistic(){
         String TotalBook = "SELECT SUM(available_copies) FROM books";
         String TotalUser = "SELECT COUNT(id) FROM users WHERE role = 'user'";
@@ -38,7 +40,7 @@ public class CheckStatistic {
         int getTotalUser = getTotal(TotalUser);
         int getcurrentBorrowed = getTotal(currentBorrowed);
         
-        ArrayList<Book> getTop = getTop5(MostBorrowed);
+        ArrayList<Most5> getTop = getTop5(MostBorrowed);
         ArrayList<MonthBorrow> getData = getCountMonth(MonthBorrow);
         
         double getDuration = getAverage(AverageTime);
@@ -95,9 +97,9 @@ public class CheckStatistic {
         return 0;
     }
     
-    public ArrayList<Book> getTop5(String top){
+    public ArrayList<Most5> getTop5(String top){
         Connection cn = null;
-        ArrayList<Book> getTop = new ArrayList();
+        ArrayList<Most5> getTop = new ArrayList();
         try{
             cn = DBUtils.getConnection();
             if(cn != null){
@@ -105,9 +107,7 @@ public class CheckStatistic {
                 ResultSet rs = st.executeQuery();
                 if(rs != null){
                     while(rs.next()){
-                        getTop.add(new Book(rs.getInt("id"), rs.getNString("title"), rs.getNString("title")
-                                , rs.getString("isbn"), rs.getNString("category"), rs.getInt("published_year")
-                                , rs.getInt("total_copies"), rs.getInt("available_copies"), rs.getString("status")));
+                        getTop.add(new Most5(rs.getString("title"), rs.getInt("times_borrowed")));
                     }
                     return getTop;
                 }

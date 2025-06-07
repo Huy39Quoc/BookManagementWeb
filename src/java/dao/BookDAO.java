@@ -11,7 +11,6 @@ import JDBC.DBUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -87,27 +86,32 @@ public class BookDAO implements IBook {
     public int AddBook(Book book){
         int request = 0;
         Connection cn = null;
-        if(CheckExistBook(book) == null){
+        if(CheckExistBook(book) != null){
             return request;
         }
         try{
             cn = DBUtils.getConnection();
             if(cn != null){
-                String sql = "INSERT INTO books VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO books (title, author, isbn, category, published_year, total_copies, available_copies, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement ps = cn.prepareStatement(sql);
-                int Id = book.getId(), PublishedYear = book.getPublishedYear(), TotalCopies = book.getTotalCopies(), AvailableCopies = book.getAvailableCopies();
+                int PublishedYear = book.getPublishedYear(), TotalCopies = book.getTotalCopies(), AvailableCopies = book.getAvailableCopies();
                 String Title = book.getTitle(), Author = book.getAuthor(), ISBN = book.getISBN(), Category = book.getCategory(), Status = book.getStatus();
-                ps.setInt(1, Id);
-                ps.setString(2, Title);
-                ps.setString(3, Author);
-                ps.setString(4, ISBN);
-                ps.setString(5, Category);
-                ps.setInt(6, PublishedYear);
-                ps.setInt(7, TotalCopies);
-                ps.setInt(8, AvailableCopies);
-                ps.setString(9, Status);
+                ps.setString(1, Title);
+                ps.setString(2, Author);
+                ps.setString(3, ISBN);
+                ps.setString(4, Category);
+                ps.setInt(5, PublishedYear);
+                ps.setInt(6, TotalCopies);
+                ps.setInt(7, AvailableCopies);
+                ps.setString(8, Status);
                 request = ps.executeUpdate();
-                booksList.add(new Book(Id, Title, Author, ISBN, Category, PublishedYear, TotalCopies, AvailableCopies, Status));
+                if(request > 0){
+                    ResultSet rs = ps.getGeneratedKeys();
+                    if(rs.next()){
+                        int Id = rs.getInt("id");
+                        booksList.add(new Book(Id, Title, Author, ISBN, Category, PublishedYear, TotalCopies, AvailableCopies, Status));
+                    }
+                }
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -124,27 +128,56 @@ public class BookDAO implements IBook {
     }
     
     public int EditBook(Book book){
+        Book previous;
         int request = 0;
+        int id = book.getId();
         Connection cn = null;
-        if(CheckExistBook(book) == null){
+        if(CheckExistBook(id) == null){
             return request;
+        }else{
+            previous = CheckExistBook(id);
         }
+        String title = book.getTitle().equals("") ? previous.getTitle() : book.getTitle();
+        String author = book.getAuthor().equals("") ? previous.getAuthor() : book.getAuthor();
+        String isbn = book.getISBN().equals("") ? previous.getISBN() : book.getISBN();
+        String category = book.getCategory().equals("") ? previous.getCategory() : book.getCategory();
+        int publishedYear = book.getPublishedYear();
+        int totalCopies = book.getTotalCopies();
+        int availableCopies = book.getAvailableCopies();
+        String status = book.getStatus().equals("") ? previous.getStatus() : book.getStatus();
+        
         try{
             cn = DBUtils.getConnection();
             if(cn != null){
-                String sql = "UPDATE books SET id = ?, title = ?, author = ?, isbn = ?, category = ?"
-                        + ", published_year = ?, total_copies = ?, available_copies = ?, status = ?";
+                String sql = "UPDATE books SET title = ?, author = ?, isbn = ?, category = ?"
+                        + ", published_year = ?, total_copies = ?, available_copies = ?, status = ? "
+                        + "WHERE id = ?";
                 PreparedStatement ps = cn.prepareStatement(sql);
-                ps.setInt(1, book.getId());
-                ps.setString(2, book.getTitle());
-                ps.setString(3, book.getAuthor());
-                ps.setString(4, book.getISBN());
-                ps.setString(5, book.getCategory());
-                ps.setInt(6, book.getPublishedYear());
-                ps.setInt(7, book.getTotalCopies());
-                ps.setInt(8, book.getAvailableCopies());
-                ps.setString(9, book.getStatus());
+                ps.setString(1, title);
+                ps.setString(2, author);
+                ps.setString(3, isbn);
+                ps.setString(4, category);
+                ps.setInt(5, publishedYear);
+                ps.setInt(6, totalCopies);
+                ps.setInt(7, availableCopies);
+                ps.setString(8, status);
+                ps.setInt(9, id);
                 request = ps.executeUpdate();
+                if(request > 0){
+                    for(Book edit: booksList){
+                        if(edit.getId() == id){
+                            edit.setTitle(title);
+                            edit.setAuthor(author);
+                            edit.setISBN(isbn);
+                            edit.setCategory(category);
+                            edit.setPublishedYear(publishedYear);
+                            edit.setTotalCopies(totalCopies);
+                            edit.setAvailableCopies(availableCopies);
+                            edit.setStatus(status);
+                            break;
+                        }
+                    }
+                }
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -188,6 +221,36 @@ public class BookDAO implements IBook {
         return request;
     }
     
+    public Book CheckExistBook(int id){
+        Book check = null;
+        Connection cn = null;
+        try{
+            cn = DBUtils.getConnection();
+            if(cn != null){
+                String sql = "SELECT * FROM books WHERE id = ?";
+                PreparedStatement ps = cn.prepareStatement(sql);
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                if(rs != null && rs.next()){
+                    check = new Book(rs.getInt("id"), rs.getString("title"), rs.getString("author"), rs.getString("isbn")
+                            , rs.getString("category"), rs.getInt("published_year"), rs.getInt("total_copies")
+                            , rs.getInt("available_copies"), rs.getString("status"));
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try{
+                if(cn != null){
+                    cn.close();
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        return check;
+    }
+    
     public Book CheckExistBook(Book book){
         Book check = null;
         Connection cn = null;
@@ -224,4 +287,35 @@ public class BookDAO implements IBook {
         Overdue = Borrow.stream().filter(i -> i.getStatus().equalsIgnoreCase("overdue") || (i.getReturnDate() == null && i.getDueDate().before(today))).collect(Collectors.toList());
         return Overdue;
     }
+    
+     public int EditBookStatus(int id){
+        int check = 0;
+        Book book = CheckExistBook(id);
+        if(book != null){
+            Connection cn = null;
+            try{
+                cn = DBUtils.getConnection();
+                if(cn != null){
+                    String status = book.getStatus().equals("active") ? "blocked" : "active";
+                    String sql = "UPDATE users SET status = ? WHERE id = ?";
+                    PreparedStatement pt = cn.prepareStatement(sql);
+                    pt.setString(1, status);
+                    pt.setInt(2, id);
+                    check = pt.executeUpdate();
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }finally{
+                try{
+                    if(cn != null){
+                        cn.close();
+                    }
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        return check;
+    }
+     
 }
