@@ -22,6 +22,7 @@
             <a href="AdminDashboard?file=Manage">Manage Book</a>
             <a href="AdminDashboard?file=Transaction">Transaction</a>
             <a href="AdminDashboard?file=Access">User Access</a>
+            <a href="AdminDashboard?file=Request">Request</a>
             <a href="AdminDashboard?file=Overdue">Overdue Book</a>
             <a href="AdminDashboard?file=Inventory">Inventory</a>
             <a href="AdminDashboard?file=Statistic">Statistic</a>

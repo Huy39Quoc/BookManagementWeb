@@ -13,23 +13,15 @@ import java.util.Date;
  */
 public class BookRequest {
     private int Id;
-    private int UserId;
-    private int BookId;
+    private String UserName;
+    private String BookTitle;
     private Date RequestDate;
     private String Status;
     
-    public BookRequest(){
-        this.Id = 0;
-        this.UserId = 0;
-        this.BookId = 0;
-        this.RequestDate = null;
-        this.Status = null;
-    }
-    
-    public BookRequest(int Id, int UserId, int BookId, Date RequestDate, String Status){
+    public BookRequest(int Id, String UserName, String BookTitle, Date RequestDate, String Status){
         this.Id = Id;
-        this.UserId = UserId;
-        this.BookId = BookId;
+        this.UserName = UserName;
+        this.BookTitle = BookTitle;
         this.RequestDate = RequestDate;
         this.Status = Status;
     }
@@ -42,20 +34,20 @@ public class BookRequest {
         this.Id = Id;
     }
 
-    public int getUserId() {
-        return UserId;
+    public String getUserName() {
+        return UserName;
     }
 
-    public void setUserId(int UserId) {
-        this.UserId = UserId;
+    public void setUserName(String UserName) {
+        this.UserName = UserName;
     }
 
-    public int getBookId() {
-        return BookId;
+    public String getBookTitle() {
+        return BookTitle;
     }
 
-    public void setBookId(int BookId) {
-        this.BookId = BookId;
+    public void setBookTitle(String BookTitle) {
+        this.BookTitle = BookTitle;
     }
 
     public Date getRequestDate() {
@@ -72,11 +64,5 @@ public class BookRequest {
 
     public void setStatus(String Status) {
         this.Status = Status;
-    }
-    
-    @Override
-    public String toString(){
-        return String.format("%d, %d, %d, %s, &s", this.Id, this.UserId, this.BookId
-                , new SimpleDateFormat("yyyy-MM-dd").format(this.RequestDate), this.Status);
     }
 }

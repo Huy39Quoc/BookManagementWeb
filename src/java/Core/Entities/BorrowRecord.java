@@ -13,27 +13,17 @@ import java.util.Date;
  */
 public class BorrowRecord {
     private int Id;
-    private int UserId;
-    private int BookId;
+    private String UserName;
+    private String BookTitle;
     private Date BorrowDate;
     private Date DueDate;
     private Date ReturnDate;
     private String Status;
     
-    public BorrowRecord(){
-        this.Id = 0;
-        this.UserId = 0;
-        this.BookId = 0;
-        this.BorrowDate = null;
-        this.DueDate = null;
-        this.ReturnDate = null;
-        this.Status = "borrowed";
-    }
-    
-    public BorrowRecord(int Id, int UserId, int BookId, Date BorrowDate, Date DueDate, Date ReturnDate, String Status){
+    public BorrowRecord(int Id, String UserName, String BookTitle, Date BorrowDate, Date DueDate, Date ReturnDate, String Status){
         this.Id = Id;
-        this.UserId = UserId;
-        this.BookId = BookId;
+        this.UserName = UserName;
+        this.BookTitle = BookTitle;
         this.BorrowDate = BorrowDate;
         this.DueDate = DueDate;
         this.ReturnDate = ReturnDate;
@@ -48,20 +38,20 @@ public class BorrowRecord {
         this.Id = Id;
     }
 
-    public int getUserId() {
-        return UserId;
+    public String getUserName() {
+        return UserName;
     }
 
-    public void setUserId(int UserId) {
-        this.UserId = UserId;
+    public void setUserName(String UserName) {
+        this.UserName = UserName;
     }
 
-    public int getBookId() {
-        return BookId;
+    public String getBookTitle() {
+        return BookTitle;
     }
 
-    public void setBookId(int BookId) {
-        this.BookId = BookId;
+    public void setBookTitle(String BookTitle) {
+        this.BookTitle = BookTitle;
     }
 
     public Date getBorrowDate() {
@@ -94,13 +84,5 @@ public class BorrowRecord {
 
     public void setStatus(String Status) {
         this.Status = Status;
-    }
-    
-    @Override
-    public String toString(){
-        return String.format("%d, %d, %d, %s, %s, %s, %s", this.Id, this.UserId, this.BookId
-                , new SimpleDateFormat("yyyy-MM-dd").format(this.BorrowDate)
-                , new SimpleDateFormat("yyyy-MM-dd").format(this.DueDate)
-                , new SimpleDateFormat("yyyy-MM-dd").format(this.ReturnDate), this.Status);
     }
 }

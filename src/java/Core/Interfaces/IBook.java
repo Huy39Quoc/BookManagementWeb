@@ -5,7 +5,10 @@
 package Core.Interfaces;
 
 import Core.Entities.Book;
+import Core.Entities.BookRequest;
+import Core.Entities.BorrowRecord;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,4 +20,7 @@ public interface IBook {
     int EditBook(Book book);
     int RemoveBook(int id);
     Book GetExistBook(int id);
+    ArrayList<BorrowRecord> BorrowedBook();
+    ArrayList<BookRequest> RequestBook();
+    ArrayList<BorrowRecord> Overdue();
 }

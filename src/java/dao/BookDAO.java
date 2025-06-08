@@ -5,6 +5,7 @@
 package dao;
 
 import Core.Entities.Book;
+import Core.Entities.BookRequest;
 import Core.Entities.BorrowRecord;
 import Core.Interfaces.IBook;
 import JDBC.DBUtils;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class BookDAO implements IBook {
     public ArrayList<Book> booksList = new ArrayList();
     public ArrayList<BorrowRecord> Borrow = new ArrayList();
+    public ArrayList<BookRequest> Request = new ArrayList();
     public BookDAO(){
         Connection cn = null;
         try{
@@ -48,21 +50,40 @@ public class BookDAO implements IBook {
                     }
                 }
                 
-                String sqlBorrow = "SELECT id, user_id, book_id, borrow_date, due_date, return_date, status "
-                        + "FROM borrow_records";
+                String sqlBorrow = "SELECT BR.id, U.name AS UserName, B.title AS BookTitle"
+                        + ", BR.borrow_date, BR.due_date, BR.return_date, BR.status FROM borrow_records BR "
+                        + "JOIN users U ON BR.user_id = U.id "
+                        + "JOIN books B ON BR.book_id = B.id";
                 st = cn.prepareCall(sqlBorrow);
                 rs = st.executeQuery();
                 if(rs != null){
                     Borrow.clear();
                     while(rs.next()){
                       int id = rs.getInt("id");
-                      int user_id = rs.getInt("user_id");
-                      int book_id = rs.getInt("book_id");
+                      String UserName = rs.getString("UserName");
+                      String BookTitle = rs.getString("BookTitle");
                       Date borrow_date = rs.getDate("borrow_date");
                       Date due_date = rs.getDate("due_date");
                       Date return_date = rs.getDate("return_date");
                       String status  = rs.getString("status");
-                      Borrow.add(new BorrowRecord(id, user_id, book_id, borrow_date, due_date, return_date, status));
+                      Borrow.add(new BorrowRecord(id, UserName, BookTitle, borrow_date, due_date, return_date, status));
+                    }
+                }
+                
+                String sqlRequest = "SELECT BR.id, U.name AS UserName, B.title AS BookTitle"
+                        + ", BR.request_date, BR.status FROM book_requests BR "
+                        + "JOIN users U ON BR.user_id = U.id JOIN books B ON BR.book_id = B.id";
+                st = cn.prepareCall(sqlRequest);
+                rs = st.executeQuery();
+                if(rs != null){
+                    Request.clear();
+                    while(rs.next()){
+                      int id = rs.getInt("id");
+                      String UserName = rs.getString("UserName");
+                      String BookTitle = rs.getString("BookTitle");
+                      Date request_date = rs.getDate("request_date");
+                      String status  = rs.getString("status");
+                      Request.add(new BookRequest(id, UserName, BookTitle, request_date, status));
                     }
                 }
             }
@@ -278,11 +299,19 @@ public class BookDAO implements IBook {
         return check;
     }
     
-    public List<BorrowRecord> OverdueBook(){
-        List<BorrowRecord> Overdue = new ArrayList();
+    public ArrayList<BorrowRecord> Overdue(){
+        ArrayList<BorrowRecord> getOverdue;
         Date today = new Date();
-        Overdue = Borrow.stream().filter(i -> i.getStatus().equalsIgnoreCase("overdue") || (i.getReturnDate() == null && i.getDueDate().before(today))).collect(Collectors.toList());
-        return Overdue;
+        getOverdue = (ArrayList<BorrowRecord>) Borrow.stream().filter(i -> i.getStatus().equalsIgnoreCase("overdue") || (i.getReturnDate() == null && i.getDueDate().before(today))).collect(Collectors.toList());
+        return getOverdue;
+    }
+    
+    public ArrayList<BorrowRecord> BorrowedBook(){
+        return Borrow;
+    }
+    
+    public ArrayList<BookRequest> RequestBook(){
+        return Request;
     }
     
      public int EditBookStatus(int id){
