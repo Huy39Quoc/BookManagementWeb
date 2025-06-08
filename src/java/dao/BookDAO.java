@@ -86,7 +86,7 @@ public class BookDAO implements IBook {
     public int AddBook(Book book){
         int request = 0;
         Connection cn = null;
-        if(CheckExistBook(book) != null){
+        if(GetExistBook(book) != null){
             return request;
         }
         try{
@@ -132,10 +132,10 @@ public class BookDAO implements IBook {
         int request = 0;
         int id = book.getId();
         Connection cn = null;
-        if(CheckExistBook(id) == null){
+        if(GetExistBook(id) == null){
             return request;
         }else{
-            previous = CheckExistBook(id);
+            previous = GetExistBook(id);
         }
         String title = book.getTitle().equals("") ? previous.getTitle() : book.getTitle();
         String author = book.getAuthor().equals("") ? previous.getAuthor() : book.getAuthor();
@@ -193,18 +193,15 @@ public class BookDAO implements IBook {
         return request;
     }
     
-    public int RemoveBook(Book book){
+    public int RemoveBook(int id){
         int request = 0;
         Connection cn = null;
-        if(CheckExistBook(book) == null){
-            return request;
-        }
         try{
             cn = DBUtils.getConnection();
             if(cn != null){
                 String sql = "DELETE FROM books WHERE id = ?";
                 PreparedStatement ps = cn.prepareStatement(sql);
-                ps.setInt(1, book.getId());
+                ps.setInt(1, id);
                 request = ps.executeUpdate();
             }
         }catch(Exception e){
@@ -221,7 +218,7 @@ public class BookDAO implements IBook {
         return request;
     }
     
-    public Book CheckExistBook(int id){
+    public Book GetExistBook(int id){
         Book check = null;
         Connection cn = null;
         try{
@@ -251,7 +248,7 @@ public class BookDAO implements IBook {
         return check;
     }
     
-    public Book CheckExistBook(Book book){
+    public Book GetExistBook(Book book){
         Book check = null;
         Connection cn = null;
         try{
@@ -290,7 +287,7 @@ public class BookDAO implements IBook {
     
      public int EditBookStatus(int id){
         int check = 0;
-        Book book = CheckExistBook(id);
+        Book book = GetExistBook(id);
         if(book != null){
             Connection cn = null;
             try{

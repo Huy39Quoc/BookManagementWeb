@@ -9,7 +9,6 @@ import Core.Entities.Book;
 import Core.Interfaces.IBook;
 import dao.BookDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -33,6 +32,7 @@ public class AdminTransactionServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String url = "AdminWeb/BookData.jsp";
+        String getInput;
         try{
              String function = request.getParameter("function");
              if(function == null){
@@ -43,15 +43,27 @@ public class AdminTransactionServlet extends HttpServlet {
                      url = "AdminWeb/BookData.jsp";
                      break;
                      
-                case "Search":
-                String getInput = request.getParameter("SearchBook");
-                if (getInput == null || getInput.trim().isEmpty()) {
-                    url = "AdminWeb/BookData.jsp";
-                } else {
-                    request.setAttribute("SearchBook", getInput.trim());
-                    url = "AdminSearchBook";
+                case "SearchBook":
+                    getInput = request.getParameter("SearchBook");
+                    if (getInput == null || getInput.trim().isEmpty()){
+                       url = "AdminWeb/BookData.jsp";
+                    }else{
+                       request.setAttribute("Search", "Book");
+                       request.setAttribute("SearchBook", getInput.trim());
+                       url = "AdminSearch";
                     }
                 break;
+                
+                case "SearchUser":
+                    getInput = request.getParameter("SearchUser");
+                    if(getInput == null || getInput.trim().isEmpty()){
+                        url = "AdminWeb/UserList.jsp";
+                    }else{
+                        request.setAttribute("Search", "User");
+                        request.setAttribute("SearchUser", getInput.trim());
+                        url = "AdminSearch";
+                    }
+                    break;
                 
                 case "Add":
                     request.setAttribute("Action", "Add");
@@ -62,8 +74,13 @@ public class AdminTransactionServlet extends HttpServlet {
                     url = "AdminWeb/AdminBookEdit.jsp";
                     int id = Integer.parseInt(request.getParameter("id"));
                     IBook book = new BookDAO();
-                    Book getBook = book.CheckExistBook(id);
+                    Book getBook = book.GetExistBook(id);
                     request.setAttribute("BookData", getBook);
+                    break;
+                    
+                case "Delete":
+                    request.setAttribute("Action", "Delete");
+                    url = "AdminBook";
                     break;
                     
                 case "Ban": case "Unban":

@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Statistic</title>
+        <title>User List</title>
         <link rel="stylesheet" type="text/css" href="Style/AdminStyle.css">
     </head>
     <body>
@@ -32,7 +32,26 @@
             <a href="AdminDashboard?file=System">System Configuration</a>
         </div>
         
-        <script src="Javascript/Script.js"></script>
+        <form action="AdminTransactionServlet" class="search">
+            <input type="hidden" name="function" value="SearchUser">
+            <input type="text" name="SearchUser">
+            <input type="submit" value="Search">
+        </form
+        
+        <%
+            ArrayList<Account> getUserList = (ArrayList<Account>) request.getAttribute("getUser");
+            String SearchTitle = (String) request.getAttribute("SearchTitle");
+            if(getUserList == null){
+               IUser users = new UserDAO();
+               getUserList = users.getUserList();
+            }
+            if(SearchTitle != null){
+        %>
+            <h1><%= SearchTitle%></h1>
+        <%
+            }
+            if (getUserList != null && !getUserList.isEmpty()){
+        %>
         
         <div class="UserList">
             <table class="Table_UserList">
@@ -45,22 +64,19 @@
                     <th>Action Button</th>
                 </tr>
                 <%
-                    IUser getUser = new UserDAO();
-                    ArrayList<Account> getUserList = getUser.getUserList();
-                    if (getUserList != null && !getUserList.isEmpty()) {
-                        for (Account user : getUserList) {
+                    for (Account user : getUserList){
                 %>
                 <tr>
                     <td><%= user.getId() %></td>
                     <td><%= user.getName() %></td>
                     <td><%= user.getEmail() %></td>
                     <td><%= user.getRole() %></td>
-                    <td id="status"><%= user.getStatus() %></td>
+                    <td><%= user.getStatus() %></td>
                     <td>
                         <form action="AdminTransactionServlet" method="post">
                             <input type="hidden" name="function" value="<%= user.getStatus().equals("active") ? "Ban" : "Unban" %>" />
-                            <input type="hidden" name="userId" value=<%= user.getId() %> />
-                            <input type="submit" value="<%= user.getStatus().equals("active") ? "Ban" : "Unban" %>"/>
+                            <input type="hidden" name="userId" value="<%= user.getId() %>" />
+                            <input type="submit" value="<%= user.getStatus().equals("active") ? "Ban" : "Unban" %>" />
                         </form>
                     </td>
                 </tr>

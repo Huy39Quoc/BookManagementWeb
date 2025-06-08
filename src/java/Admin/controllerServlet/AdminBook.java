@@ -38,7 +38,11 @@ public class AdminBook extends HttpServlet {
         IBook book = new BookDAO();
         int get;
         try{
-            String action = request.getParameter("Action");
+            String action = (String) request.getAttribute("Action");
+            if (action == null) {
+                action = request.getParameter("Action");
+             }
+            
             switch(action){
                 case "Add":
                     title = request.getParameter("title");
@@ -63,6 +67,11 @@ public class AdminBook extends HttpServlet {
                     availableCopies = Integer.parseInt(request.getParameter("availableCopies"));
                     status = request.getParameter("status");
                     get = book.EditBook(new Book(id, title, author, isbn, category, publishedYear, totalCopies, availableCopies, status));
+                    break;
+                    
+                case "Delete":
+                    id = Integer.parseInt(request.getParameter("id"));
+                    get = book.RemoveBook(id);
                     break;
             }
         }catch(Exception e){

@@ -15,5 +15,6 @@ public interface IBook {
     ArrayList<Book> getBookList();
     int AddBook(Book book);
     int EditBook(Book book);
-    Book CheckExistBook(int id);
+    int RemoveBook(int id);
+    Book GetExistBook(int id);
 }
