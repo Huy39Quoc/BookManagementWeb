@@ -4,6 +4,8 @@
     Author     : ChanRoi
 --%>
 
+<%@page import="dao.BookDAO"%>
+<%@page import="Core.Interfaces.IBook"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Core.Entities.Book"%>
@@ -39,10 +41,16 @@
         <%
            ArrayList<Book> getSearchBook = (ArrayList<Book>) request.getAttribute("BookList");
            String searchTitle = (String) request.getAttribute("SearchTitle");
-           if (getSearchBook != null && searchTitle != null){
+           if(getSearchBook == null){
+               IBook book = new BookDAO();
+               getSearchBook = book.getBookList();
+            }
+           if (getSearchBook != null){
+           if(searchTitle != null){
         %>
         <h1><%= searchTitle %></h1>
         <%
+            }
            if (!getSearchBook.isEmpty()) {
         %>
         
@@ -93,14 +101,10 @@
             %>
         </table>
         <%
-          }else{
+          }
+        }
         %>
-        <p>No books found.</p>
-        <%
-           }
-        }else{
-        %>
-        <div class="Action">
+                <div class="Action">
             <form action="AdminTransactionServlet" method="post">
                 <input type="hidden" name="function" value="Add">
                 Title Book: <input type="text" name="title" required><span style="color: red">*</span><br>
@@ -118,8 +122,5 @@
                 <input type="submit" value="Add">
             </form>
         </div>
-        <%
-          }
-        %>
     </body>
 </html>

@@ -6,8 +6,11 @@
 package Admin.controllerServlet;
 
 import Core.Entities.Book;
+import Core.Entities.Config;
 import Core.Interfaces.IBook;
+import Core.Interfaces.IConfig;
 import dao.BookDAO;
+import dao.ConfigDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -36,6 +39,7 @@ public class AdminBook extends HttpServlet {
         String title, author, isbn, category, status;
         int id, publishedYear, totalCopies, availableCopies;
         IBook book = new BookDAO();
+        IConfig config = new ConfigDAO();
         int get;
         try{
             String action = (String) request.getAttribute("Action");
@@ -66,12 +70,31 @@ public class AdminBook extends HttpServlet {
                     totalCopies = Integer.parseInt(request.getParameter("totalCopies"));
                     availableCopies = Integer.parseInt(request.getParameter("availableCopies"));
                     status = request.getParameter("status");
+                    
+                    if(totalCopies == 0 || availableCopies == 3){
+                        status = "inactive";
+                    }
                     get = book.EditBook(new Book(id, title, author, isbn, category, publishedYear, totalCopies, availableCopies, status));
                     break;
                     
                 case "Delete":
                     id = Integer.parseInt(request.getParameter("id"));
                     get = book.RemoveBook(id);
+                    break;
+                    
+                case "Data":
+                    id = Integer.parseInt(request.getParameter("id"));
+                    request.setAttribute("setEdit", config.getConfig(id));
+                    request.setAttribute("ShowEdit", "true");
+                    url = "AdminWeb/System_config.jsp";
+                    break;
+                    
+                case "Save":
+                    id = Integer.parseInt(request.getParameter("id"));
+                    String value = request.getParameter("Value");
+                    request.setAttribute("ShowEdit", "false");
+                    get = config.EditConfig(id, value);
+                    url = "AdminWeb/System_config.jsp";
                     break;
             }
         }catch(Exception e){

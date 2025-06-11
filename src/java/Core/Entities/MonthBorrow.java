@@ -23,7 +23,7 @@ public class MonthBorrow {
         return time;
     }
 
-    public int getCount() {
+    public int getCount(){
         return count;
     }
     

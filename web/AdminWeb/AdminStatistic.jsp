@@ -4,6 +4,7 @@
     Author     : ChanRoi
 --%>
 
+<%@page import="java.time.YearMonth"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Core.Interfaces.IStatistic"%>
 <%@page import="dao.CheckStatistic"%>
@@ -17,6 +18,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Statistic</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="Javascript/Script.js"></script>
         <link rel="stylesheet" type="text/css" href="Style/AdminStyle.css">
     </head>
     <body>
@@ -60,10 +63,29 @@
                 <%
                 ArrayList<Most5> Most = (ArrayList<Most5>) getStatistic.getMostBorrowed();
                 ArrayList<MonthBorrow> Month = (ArrayList<MonthBorrow>) getStatistic.getBorrowingStat();
+                ArrayList<YearMonth> labels = new ArrayList();
+                ArrayList<Integer> data = new ArrayList();
+                for(MonthBorrow month: Month){
+                     labels.add(month.getTime());
+                     data.add(month.getCount());
+                    }
                 %>
-                <div>
-                    <h3>Top 5 books borrowed the most: </h3>
+                <script>
+                    const chartLabels = [
+                                      <% for (int i = 0; i < labels.size(); i++) { %>
+                                              "<%= labels.get(i) %>"<%= (i < labels.size() - 1) ? "," : "" %>
+                                          <% } %>
+                                        ];
+                                              
+                    const chartData = [
+                                        <% for (int i = 0; i < data.size(); i++) { %>
+                                             <%= data.get(i) %><%= (i < data.size() - 1) ? "," : "" %>
+                                           <% } %>
+                                       ];
+                   </script>
+                <div class="Scale">
                     <table class="Most5">
+                        <caption><h3>Top 5 books borrowed the most</h3></caption>
                         <tr>
                           <th>No. </th>
                           <th>Book Title</th>
@@ -81,8 +103,13 @@
                             }
                         %>
                     </table>
-                </div>
                     
+                         <div class="Barchart" style="width: 600px; height: 300px;">
+                       <canvas id="barChart"></canvas>
+                 </div>
+                </div>
+                  
+
                 
     </body>
 </html>

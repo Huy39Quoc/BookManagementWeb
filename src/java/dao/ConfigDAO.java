@@ -52,4 +52,51 @@ public class ConfigDAO implements IConfig{
     public ArrayList<Config> configList(){
        return configList;
    }
+    
+    public int EditConfig(int id, String value){
+        Connection cn = null;
+        Config editConfig = getConfig(id);
+        if(editConfig == null){
+            return 0;
+        }
+        int result = 0;
+        try{
+            Double textNumber = Double.parseDouble(value);
+            cn = DBUtils.getConnection();
+            if(cn != null){
+                String sql = "UPDATE system_config SET config_value = ? WHERE id = ?";
+                PreparedStatement ps = cn.prepareStatement(sql);
+                ps.setString(1, value);
+                ps.setInt(2, editConfig.getId());
+                result = ps.executeUpdate();
+                if(result > 0){
+                    for(Config getEdit: configList){
+                        if(getEdit.getId() == editConfig.getId()){
+                            getEdit.setValue(value);
+                            break;
+                        }
+                    }
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try{
+                if(cn != null){
+                    cn.close();
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+    
+    public Config getConfig(int id){
+        Config config = configList.stream().filter(i -> i.getId() == id).findAny().orElse(null);
+        if(config == null){
+            return null;
+        }
+        return config;
+    }
 }

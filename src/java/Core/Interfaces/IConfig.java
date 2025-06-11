@@ -13,4 +13,6 @@ import java.util.ArrayList;
  */
 public interface IConfig {
     ArrayList<Config> configList();
+    Config getConfig(int id);
+    int EditConfig(int id, String value);
 }

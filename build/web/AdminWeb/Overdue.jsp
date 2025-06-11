@@ -39,22 +39,33 @@
         if(!getOverdue.isEmpty()){
         %>
         <div>
-            <table>
+            <table class="Overdue">
                 <tr>
                     <th>User</th>
                     <th>Book Title</th>
                     <th>Borrow Date</th>
-                    
+                    <th>Due Date</th>
+                    <th>Return Date</th>
+                    <th>Status</th>
                 </tr>
-            </table>
-        </div>
         <%
         for(BorrowRecord overdue: getOverdue){
         %>
-        
+        <tr>
+        <td><%= overdue.getUserName()%></td>
+        <td><%= overdue.getBookTitle()%></td>
+        <td><%= overdue.getBorrowDate()%></td>
+        <td><%= overdue.getDueDate()%></td>
+        <td><%= overdue.getReturnDate() == null ? "Not return yet" : overdue.getReturnDate()%></td>
+        <td><%= overdue.getStatus()%></td>
+        </tr>
         <%
               }
-           }
+        %>
+        </table>
+      </div>
+        <%
+            }
         %>
     </body>
 </html>

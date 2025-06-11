@@ -58,7 +58,7 @@ th{
     text-align: center;
 }
 
-.Table_UserList, .ListBook, .StatisticTable{
+.Table_UserList, .ListBook, .StatisticTable, .Overdue{
     border-collapse: collapse;
     padding: 10px;
     width: 100vw;
@@ -109,10 +109,18 @@ th{
 
 .Action{
     border: 1px solid black;
-    width: 400px;           /* or max-width: 90%; for responsive */
-    margin: 20px auto;      /* centers horizontally and adds vertical space */
-    padding: 15px;          /* some padding inside the border */
-    box-sizing: border-box; /* includes padding in the width */
-    border-radius: 5px;     /* optional: rounded corners */
-    background-color: #f9f9f9; /* optional: light background */
+    width: 400px;
+    margin: 20px auto;
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.Scale{
+    display: flex;
+}
+
+.Barchart{
+    margin-top: 50px;
 }

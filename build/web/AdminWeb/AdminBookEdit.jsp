@@ -39,9 +39,9 @@
                 Author: <input type="text" name="author" value="<%= data.getAuthor()%>"><br>
                 ISBN: <input type="text" name="isbn" value="<%= data.getISBN()%>"><br>
                 Category: <input type="text" name="category" value="<%= data.getCategory()%>"><br>
-                Published Year: <input type="number" name="publishedYear" value="<%= data.getPublishedYear()%>"><br>
-                Total Copies: <input type="number" name="totalCopies" value="<%= data.getTotalCopies()%>"><br>
-                Available Copies: <input type="number" name="availableCopies" value="<%= data.getAvailableCopies()%>"><br>
+                Published Year: <input type="number" name="publishedYear" value="<%= data.getPublishedYear()%>" min="1000"><br>
+                Total Copies: <input type="number" name="totalCopies" value="<%= data.getTotalCopies()%>" min="0"><br>
+                Available Copies: <input type="number" name="availableCopies" value="<%= data.getAvailableCopies()%>" min="0"><br>
                 Status: <select name="status" required>
                             <option value="active" selected>Active</option>
                             <option value="inactive">Inactive</option>
