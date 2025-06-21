@@ -50,7 +50,7 @@ public class BookDAO implements IBook {
                     }
                 }
                 
-                String sqlBorrow = "SELECT BR.id, U.name AS UserName, B.title AS BookTitle"
+                String sqlBorrow = "SELECT BR.id, BR.user_id, BR.book_id, U.name AS UserName, B.title AS BookTitle"
                         + ", BR.borrow_date, BR.due_date, BR.return_date, BR.status FROM borrow_records BR "
                         + "JOIN users U ON BR.user_id = U.id "
                         + "JOIN books B ON BR.book_id = B.id";
@@ -60,30 +60,36 @@ public class BookDAO implements IBook {
                     Borrow.clear();
                     while(rs.next()){
                       int id = rs.getInt("id");
+                      int userId = rs.getInt("user_id");
+                      int bookId = rs.getInt("book_id");
                       String UserName = rs.getString("UserName");
                       String BookTitle = rs.getString("BookTitle");
                       Date borrow_date = rs.getDate("borrow_date");
                       Date due_date = rs.getDate("due_date");
                       Date return_date = rs.getDate("return_date");
                       String status  = rs.getString("status");
-                      Borrow.add(new BorrowRecord(id, UserName, BookTitle, borrow_date, due_date, return_date, status));
+                      Borrow.add(new BorrowRecord(id, userId, bookId, UserName, BookTitle, borrow_date, due_date, return_date, status));
                     }
                 }
                 
-                String sqlRequest = "SELECT BR.id, U.name AS UserName, B.title AS BookTitle"
+                String sqlRequest = "SELECT BR.id, BR.user_id, BR.book_id, U.name AS UserName, U.status AS user_status, B.title AS BookTitle "
                         + ", BR.request_date, BR.status FROM book_requests BR "
-                        + "JOIN users U ON BR.user_id = U.id JOIN books B ON BR.book_id = B.id";
+                        + "JOIN users U ON BR.user_id = U.id "
+                        + "JOIN books B ON BR.book_id = B.id";
                 st = cn.prepareCall(sqlRequest);
                 rs = st.executeQuery();
                 if(rs != null){
                     Request.clear();
                     while(rs.next()){
                       int id = rs.getInt("id");
+                      int userId = rs.getInt("user_id");
+                      int bookId = rs.getInt("book_id");
                       String UserName = rs.getString("UserName");
                       String BookTitle = rs.getString("BookTitle");
                       Date request_date = rs.getDate("request_date");
                       String status  = rs.getString("status");
-                      Request.add(new BookRequest(id, UserName, BookTitle, request_date, status));
+                      String userStatus = rs.getString("user_status");
+                      Request.add(new BookRequest(id, userId, bookId, UserName, BookTitle, request_date, status, userStatus));
                     }
                 }
             }

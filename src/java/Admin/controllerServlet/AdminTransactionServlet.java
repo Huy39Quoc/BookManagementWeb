@@ -6,14 +6,18 @@
 package Admin.controllerServlet;
 
 import Core.Entities.Book;
+import Core.Entities.BookRequest;
 import Core.Interfaces.IBook;
+import Core.Interfaces.IRequest;
 import dao.BookDAO;
+import dao.RequestDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -33,6 +37,8 @@ public class AdminTransactionServlet extends HttpServlet {
     throws ServletException, IOException {
         String url = "AdminWeb/BookData.jsp";
         String getInput;
+        IRequest getRequest = new RequestDAO();
+        ArrayList<BookRequest> updatedRequests = null;
         try{
              String function = request.getParameter("function");
              if(function == null){
@@ -85,6 +91,23 @@ public class AdminTransactionServlet extends HttpServlet {
                     
                 case "Ban": case "Unban":
                     url = "AdminBanServlet";
+                    break;
+                    
+                case "Approved":
+                     int idApprove = Integer.parseInt(request.getParameter("id"));
+                     getRequest.getApprove(idApprove);
+                     getRequest.loadRequestBooks();
+                     updatedRequests = getRequest.RequestBook();
+                     request.setAttribute("requestSearch", updatedRequests);
+                     url = "AdminWeb/ApprovalRequest.jsp";
+                     break;
+                case "Rejected":
+                    int idReject = Integer.parseInt(request.getParameter("id"));
+                    getRequest.getReject(idReject);
+                    getRequest.loadRequestBooks();
+                    url = "AdminWeb/ApprovalRequest.jsp";
+                    updatedRequests = getRequest.RequestBook();
+                    request.setAttribute("requestSearch", updatedRequests);
                     break;
              }
         }catch(Exception e){

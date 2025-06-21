@@ -13,6 +13,8 @@ import java.util.Date;
  */
 public class BorrowRecord {
     private int Id;
+    private int userId;
+    private int bookId;
     private String UserName;
     private String BookTitle;
     private Date BorrowDate;
@@ -20,8 +22,14 @@ public class BorrowRecord {
     private Date ReturnDate;
     private String Status;
     
-    public BorrowRecord(int Id, String UserName, String BookTitle, Date BorrowDate, Date DueDate, Date ReturnDate, String Status){
+    public BorrowRecord(){
+        
+    }
+    
+    public BorrowRecord(int Id, int userId, int bookId, String UserName, String BookTitle, Date BorrowDate, Date DueDate, Date ReturnDate, String Status){
         this.Id = Id;
+        this.userId = userId;
+        this.bookId = bookId;
         this.UserName = UserName;
         this.BookTitle = BookTitle;
         this.BorrowDate = BorrowDate;
@@ -36,6 +44,22 @@ public class BorrowRecord {
 
     public void setId(int Id) {
         this.Id = Id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
     public String getUserName() {

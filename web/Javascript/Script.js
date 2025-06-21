@@ -3,16 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
-function drawBarChart() {
+document.addEventListener('DOMContentLoaded', function () {
     const ctx = document.getElementById('barChart').getContext('2d');
 
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: chartLabels,
+            labels: chartLabels, // Make sure chartLabels is defined globally or inline before this script runs
             datasets: [{
                 label: 'Borrowed Book in month',
-                data: chartData,
+                data: chartData, // Make sure chartData is defined globally or inline before this script runs
                 backgroundColor: 'rgba(75, 192, 192, 0.6)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
@@ -37,6 +37,4 @@ function drawBarChart() {
             }
         }
     });
-}
-
-document.addEventListener('DOMContentLoaded', drawBarChart);
+});

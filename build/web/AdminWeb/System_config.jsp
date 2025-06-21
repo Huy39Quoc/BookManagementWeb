@@ -58,7 +58,7 @@
                     <td><%=data.getValue()%></td>
                     <td><%=data.getDescription()%></td>
                     
-                    <td><form action="AdminBook">
+                    <td><form action="AdminBook" method="post">
                     <input type="hidden" name="Action" value="Data">
                     <input type="hidden" name="id" value="<%= data.getId()%>">
                     <input type="submit" value="Edit">

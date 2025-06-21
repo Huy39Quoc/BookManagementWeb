@@ -52,6 +52,7 @@ public class AdminDashboard extends HttpServlet {
                     break;
                     
                 case "Request":
+                    url = "AdminWeb/ApprovalRequest.jsp";
                     break;
                     
                 case "Overdue":

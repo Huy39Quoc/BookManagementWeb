@@ -17,6 +17,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: #000;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }*/
+body{
+    padding: 0;
+    margin: 0;
+}
+
 .header{
     display: flex;
     justify-content: center;
@@ -58,33 +63,45 @@ th{
     text-align: center;
 }
 
-.Table_UserList, .ListBook, .StatisticTable, .Overdue{
+.Table_UserList, .ListBook, .StatisticTable, .Overdue, .RequestTable{
     border-collapse: collapse;
     padding: 10px;
-    width: 100vw;
+    width: 80vw;
+    margin-left: 250px;
 }
 
 .Menu{
-    background-color: black;
+    background-color: deepskyblue;
     display:flex;
-    justify-content: space-around;
-    height: 60px;
+    position: fixed;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100vh;
     align-items: center;
-    width: 100vw;
+    width: 18vw;
+    padding: 20px 0;
 }
 
 .Menu a {
     color: white;
     cursor: pointer;
-    margin: 0;
-    height: 60px;
-    padding: 0 20px;  
+    margin: 0 0 0 30px;
+    height: 30px;
+    width: 20vw;
+    padding: 5px 20px;  
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     text-decoration: none;
+    font-size: 15px;
 }
 
+.Menu p{
+    font-size: 15px;
+    margin: 0 0 0 30px;
+    width: 20vw;
+    padding: 10px 0;
+}
 
 .Menu a:hover{
     background-color: white;

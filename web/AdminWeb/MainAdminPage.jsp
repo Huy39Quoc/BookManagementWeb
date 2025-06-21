@@ -15,10 +15,11 @@
     <body>
         <div class="header">
             <h1>Book Management Page</h1>
-            <p><a href="AdminDashboard?file=Logout">Logout</a></p>
+            <p></p>
         </div>
         
        <div class="Menu">
+           <p>Menu</p>
             <a href="AdminDashboard?file=Manage">Manage Book</a>
             <a href="AdminDashboard?file=Transaction">Transaction</a>
             <a href="AdminDashboard?file=Access">User Access</a>
@@ -27,6 +28,7 @@
             <a href="AdminDashboard?file=Inventory">Inventory</a>
             <a href="AdminDashboard?file=Statistic">Statistic</a>
             <a href="AdminDashboard?file=System">System Configuration</a>
+            <a href="AdminDashboard?file=Logout">Logout</a>
        </div>
             
             
