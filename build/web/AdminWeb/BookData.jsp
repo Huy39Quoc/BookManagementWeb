@@ -13,29 +13,37 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Transaction</title>
+        <title>Book Data</title>
         <link rel="stylesheet" type="text/css" href="Style/AdminStyle.css">
     </head>
     <body>
         <div class="header">
-            <h1>Transaction</h1>
-            <p><a href="AdminDashboard?file=Logout">Logout</a></p>
+            <h1>Book Data</h1>
+            <p></p>
         </div>
-
-        <div class="Menu">
+        
+       <div class="Menu">
+           <p>Menu</p>
             <a href="AdminDashboard?file=Manage">Manage Book</a>
             <a href="AdminDashboard?file=Transaction">Transaction</a>
             <a href="AdminDashboard?file=Access">User Access</a>
+            <a href="AdminDashboard?file=Request">Request</a>
             <a href="AdminDashboard?file=Overdue">Overdue Book</a>
             <a href="AdminDashboard?file=Inventory">Inventory</a>
             <a href="AdminDashboard?file=Statistic">Statistic</a>
             <a href="AdminDashboard?file=System">System Configuration</a>
-        </div>
+            <a href="AdminDashboard?file=Logout">Logout</a>
+       </div>
         
         <form action="AdminTransactionServlet" method="post" class="search">
             <input type="hidden" name="function" value="SearchBook">
             <input type="text" name="SearchBook">
             <input type="submit" value="Search">
+        </form>
+        
+        <form action="AdminTransactionServlet" method="post" class="search">
+            <input type="hidden" name="function" value="AddBook">
+            <input type="submit" value="Add Book">
         </form>
         
         <%
@@ -56,7 +64,6 @@
         
         <table class="ListBook">
             <tr>
-                <th>ID</th>
                 <th>Title</th> 
                 <th>Author</th>
                 <th>ISBN</th>
@@ -72,7 +79,6 @@
               for (Book book : getSearchBook) {
             %>
             <tr>
-                <td><%= book.getId() %></td>
                 <td><%= book.getTitle() %></td>
                 <td><%= book.getAuthor() %></td>
                 <td><%= book.getISBN() %></td>
@@ -104,23 +110,5 @@
           }
         }
         %>
-                <div class="Action">
-            <form action="AdminTransactionServlet" method="post">
-                <input type="hidden" name="function" value="Add">
-                Title Book: <input type="text" name="title" required><span style="color: red">*</span><br>
-                Author: <input type="text" name="author" required><span style="color: red">*</span><br>
-                ISBN: <input type="text" name="isbn" required><span style="color: red">*</span><br>
-                Category: <input type="text" name="category"><br>
-                Published Year: <input type="number" name="publishedYear" value="1000"><br>
-                Total Copies: <input type="number" name="totalCopies" value="1" min="1"><br>
-                Available Copies: <input type="number" name="availableCopies" value="1" min="1"><br>
-                Status:
-                <select name="status" required>
-                    <option value="active" selected>Active</option>
-                    <option value="inactive">Inactive</option>
-                </select><br>
-                <input type="submit" value="Add">
-            </form>
-        </div>
     </body>
 </html>

@@ -6,138 +6,229 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Created on : May 17, 2025, 4:08:22 PM
     Author     : ChanRoi
 */
-/*.LAdmin{
-    width: 300px;
-    margin: 230px auto;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);  Safari 
-    border-radius: 12px;
-    color: #000;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-}*/
-body{
+/* ==== Reset & Body ==== */
+body {
+    margin: 0;
     padding: 0;
-    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8fafc;
+    color: #1f2937;
 }
 
-.header{
-    display: flex;
-    justify-content: center;
-}
-
-.header a{
-    color: black;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-.header p{
-    margin: 0;
-    position: absolute;
-    right: 0;
-    padding-right: 20px;
-    margin-top: 20px;
-}
-
-.Config{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
-}
-
-.Config_Table{
-    border-collapse: collapse;
-}
-
-th{
-   background-color: black;
-   color: white;
-}
-
-.Config_Table > tr, td, th{
-    border: 1px solid black;
-    padding: 10px;
-    text-align: center;
-}
-
-.Table_UserList, .ListBook, .StatisticTable, .Overdue, .RequestTable{
-    border-collapse: collapse;
-    padding: 10px;
-    width: 80vw;
-    margin-left: 250px;
-}
-
-.Menu{
-    background-color: deepskyblue;
-    display:flex;
+/* ==== Header ==== */
+.header {
     position: fixed;
-    flex-direction: column;
-    justify-content: flex-start;
-    height: 100vh;
+    top: 0;
+    left: 18vw;
+    right: 0;
+    height: 60px;
+    background-color: #ffffff;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.header h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.header a {
+    color: #1f2937;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+/* ==== Sidebar Menu ==== */
+.Menu {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 18vw;
-    padding: 20px 0;
+    height: 100vh;
+    background-color: #4f46e5;
+    padding: 80px 15px 20px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+    overflow-y: auto;
+    z-index: 1100;
 }
 
 .Menu a {
-    color: white;
-    cursor: pointer;
-    margin: 0 0 0 30px;
-    height: 30px;
-    width: 20vw;
-    padding: 5px 20px;  
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    font-size: 15px;
     text-decoration: none;
-    font-size: 15px;
+    color: #fff;
+    border-radius: 4px;
+    transition: all 0.3s;
+    white-space: nowrap;
 }
 
-.Menu p{
-    font-size: 15px;
-    margin: 0 0 0 30px;
-    width: 20vw;
-    padding: 10px 0;
+.Menu a:hover,
+.Menu a.active {
+    background-color: #e0e7ff;
+    color: #4f46e5;
+    font-weight: bold;
 }
 
-.Menu a:hover{
-    background-color: white;
-    color: black;
-}
-
-.Welcome{
-     display: flex;
-     justify-content: center;
-     margin-top: 300px;
-}
-
-.search{
-    margin-left: 1000px;
-}
-
-.Most5{
-    border-collapse: collapse;
-    padding: 10px;
-    width: 50vw;
-}
-
-.Action{
-    border: 1px solid black;
-    width: 400px;
-    margin: 20px auto;
-    padding: 15px;
+/* ==== Container Sections ==== */
+.Welcome,
+.Config,
+.UserList,
+.RequestList {
+    margin-left: 18vw;
+    padding-top: 80px;
+    padding-right: 30px;
     box-sizing: border-box;
-    border-radius: 5px;
-    background-color: #f9f9f9;
 }
 
-.Scale{
+/* ==== Form & Input ==== */
+.Action,
+.search {
+    margin: 30px auto;
+    width: 90%;
+    max-width: 500px;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 8px 10px;
+    margin: 6px 0 12px;
+    box-sizing: border-box;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    padding: 8px 16px;
+    background-color: #4f46e5;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #4338ca;
+}
+
+/* ==== Table Style ==== */
+table {
+    border-collapse: collapse;
+    width: calc(100% - 22vw);
+    margin: 30px auto 40px; /* giảm margin-top từ 100px xuống 60px */
+    margin-left: 19vw;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    overflow-x: auto;
+    table-layout: auto;
+}
+
+
+th, td {
+    padding: 12px 16px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+th {
+    background-color: #4f46e5;
+    color: #fff;
+}
+
+tr:nth-child(even) td {
+    background-color: #f9fafb;
+}
+
+tr:hover td {
+    background-color: #f1f5f9;
+}
+
+/* ==== Statistics Section ==== */
+.Statistic {
+    margin-left: 18vw;
+    margin-top: 80px;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+/* ==== Chart & Top Borrowed Layout ==== */
+.Scale {
     display: flex;
+    gap: 10px;
+    margin-left: 5vw;  /* Giảm từ 18vw xuống 17vw để sát menu hơn */
+    margin-right: 30px;
+    margin-top: 5px;
+    padding-bottom: 40px;
+    box-sizing: border-box;
+    align-items: stretch;
 }
 
-.Barchart{
-    margin-top: 50px;
+
+/* ==== Top 5 Table ==== */
+.Most5 {
+    flex: 0 0 40%; /* Chiếm 40% chiều ngang */
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    min-width: 280px;
+    max-height: 350px;
+}
+
+.Most5 table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.Most5 th, .Most5 td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    font-size: 13px;
+}
+
+.Most5 th {
+    background-color: #4f46e5;
+    color: #fff;
+}
+
+.Most5 tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* ==== Bar Chart ==== */
+.Barchart {
+    flex: 1 1 25%;
+    min-width: 200px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    overflow-x: auto;
+    box-sizing: border-box;
+    margin-top: 80px; /* thêm khoảng cách từ trên xuống */
+}
+
+
+
+.Barchart canvas {
+    width: 100% !important;
+    height: auto !important;
 }

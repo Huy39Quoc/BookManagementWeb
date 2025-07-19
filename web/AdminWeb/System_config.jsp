@@ -13,23 +13,26 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>System Config</title>
+        <title>System Configuration</title>
         <link rel="stylesheet" type="text/css" href="Style/AdminStyle.css">
     </head>
     <body>
         <div class="header">
             <h1>System Configuration</h1>
-            <p><a href="AdminDashboard?file=Logout">Logout</a></p>
+            <p></p>
         </div>
         
        <div class="Menu">
+           <p>Menu</p>
             <a href="AdminDashboard?file=Manage">Manage Book</a>
             <a href="AdminDashboard?file=Transaction">Transaction</a>
             <a href="AdminDashboard?file=Access">User Access</a>
+            <a href="AdminDashboard?file=Request">Request</a>
             <a href="AdminDashboard?file=Overdue">Overdue Book</a>
             <a href="AdminDashboard?file=Inventory">Inventory</a>
             <a href="AdminDashboard?file=Statistic">Statistic</a>
             <a href="AdminDashboard?file=System">System Configuration</a>
+            <a href="AdminDashboard?file=Logout">Logout</a>
        </div>
         
         <%
@@ -83,6 +86,7 @@
                 </tr>
                 <%
                 for(Config data: getConfig){
+                if(data.getId() == Integer.parseInt(request.getParameter("id"))){
                 %>
                 <tr>
                 <td><%= data.getKey()%></td>
@@ -97,6 +101,22 @@
                     </form></td>
                 </tr>
                 <%
+                    }else{
+                      %>
+                    <tr>
+                    <td><%=data.getKey()%></td>
+                    <td><%=data.getValue()%></td>
+                    <td><%=data.getDescription()%></td>
+                    
+                    <td><form action="AdminBook" method="post">
+                    <input type="hidden" name="Action" value="Data">
+                    <input type="hidden" name="id" value="<%= data.getId()%>">
+                    <input type="submit" value="Edit">
+                     </form></td>
+                </tr>
+                
+                      <%
+                     }
                       }
                 %>
             </table>

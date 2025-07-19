@@ -18,24 +18,27 @@
     </head>
     <body>
         <div class="header">
-            <h1>User List</h1>
-            <p><a href="AdminDashboard?file=Logout">Logout</a></p>
+            <h1>UserList</h1>
+            <p></p>
         </div>
         
-        <div class="Menu">
+       <div class="Menu">
+           <p>Menu</p>
             <a href="AdminDashboard?file=Manage">Manage Book</a>
             <a href="AdminDashboard?file=Transaction">Transaction</a>
             <a href="AdminDashboard?file=Access">User Access</a>
+            <a href="AdminDashboard?file=Request">Request</a>
             <a href="AdminDashboard?file=Overdue">Overdue Book</a>
             <a href="AdminDashboard?file=Inventory">Inventory</a>
             <a href="AdminDashboard?file=Statistic">Statistic</a>
             <a href="AdminDashboard?file=System">System Configuration</a>
-        </div>
+            <a href="AdminDashboard?file=Logout">Logout</a>
+       </div>
         
         <form action="AdminTransactionServlet" class="search">
             <input type="hidden" name="function" value="SearchUser">
             <input type="text" name="SearchUser">
-            <input type="submit" value="Search">
+            <input type="submit" value="Search By Email">
         </form
         
         <%

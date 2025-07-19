@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -21,10 +21,8 @@ public class BorrowRecord {
     private Date DueDate;
     private Date ReturnDate;
     private String Status;
+    private String Price;
     
-    public BorrowRecord(){
-        
-    }
     
     public BorrowRecord(int Id, int userId, int bookId, String UserName, String BookTitle, Date BorrowDate, Date DueDate, Date ReturnDate, String Status){
         this.Id = Id;

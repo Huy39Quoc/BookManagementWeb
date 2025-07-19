@@ -5,6 +5,7 @@
 package dao;
 
 import Core.Entities.Book;
+import Core.Entities.Fines;
 import Core.Entities.BookRequest;
 import Core.Entities.BorrowRecord;
 import Core.Interfaces.IBook;
@@ -14,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**

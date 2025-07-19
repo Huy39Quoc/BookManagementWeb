@@ -5,17 +5,20 @@
 package dao;
 
 import Core.Entities.Fines;
+import Core.Interfaces.IFines;
 import JDBC.DBUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
  * @author ChanRoi
  */
-public class FinesDAO {
-    public Fines getFines(){
+public class FinesDAO implements IFines{
+    ArrayList<Fines> getFines = new ArrayList();
+    public FinesDAO(){
         Connection cn = null;
         try{
             cn = DBUtils.getConnection();
@@ -24,20 +27,22 @@ public class FinesDAO {
                 PreparedStatement st = cn.prepareStatement(sql);
                 ResultSet rs = st.executeQuery();
                 if(rs.next()){
-                    return new Fines(rs.getInt("id"), rs.getInt("borrow_id"), rs.getDouble("fine_amount"), rs.getString("paid_status"));
+                    getFines.add(new Fines(rs.getInt("id"), rs.getInt("borrow_id"), rs.getDouble("fine_amount"), rs.getString("paid_status")));
                 }
             }
         }catch(Exception e){
-            e.printStackTrace();
+          e.printStackTrace();
         }finally{
             try{
                 if(cn != null){
                     cn.close();
                 }
-            }catch(Exception e){
-                e.printStackTrace();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
             }
         }
-        return null;
+    public ArrayList<Fines> FinesList(){
+        return getFines;
     }
 }

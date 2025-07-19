@@ -60,6 +60,14 @@ public class AdminTransactionServlet extends HttpServlet {
                     }
                 break;
                 
+                case "AddBook":
+                    url = "AdminWeb/AddNewBook.jsp";
+                    break;
+                
+                case "ReturnBack":
+                    url = "AdminWeb/BookData.jsp";
+                    break;
+                    
                 case "SearchUser":
                     getInput = request.getParameter("SearchUser");
                     if(getInput == null || getInput.trim().isEmpty()){
